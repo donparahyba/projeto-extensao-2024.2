@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Auth from './componentes/Auth';
+import EventSearch from './componentes/EventSearch';
+import EventCreate from './componentes/EventCreate';
+import EventCalendar from './componentes/EventCalendar';
+import './styles.css';
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <img src="/Futso7.png" alt="logo da futso7" class="imagis" />
       </header>
+      <div className="container">
+        {!user ? (
+          <Auth onLogin={handleLogin} />
+        ) : (
+          <>
+            <h2>Bem-vindo!</h2>
+            <EventSearch />
+            <EventCreate />
+            <EventCalendar />
+          </>
+        )}
+      </div>
     </div>
   );
 }
